@@ -2,227 +2,138 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram WebApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .profile-card {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--tg-theme-button-color, #3390ec);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .profile-info h2 {
-            margin-bottom: 5px;
-        }
-
-        .username {
-            color: var(--tg-theme-hint-color, #999999);
-            font-size: 14px;
-        }
-
-        .info-item {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--tg-theme-hint-color, #e0e0e0);
-        }
-
-        .info-item:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .error {
-            background: #ff000020;
-            color: #ff0000;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--tg-theme-button-color, #3390ec);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-left: 10px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <div id="loading" class="loading">
-            <p>Загрузка профиля...</p>
+        <!-- Главная страница -->
+        <div id="mainPage" class="page active">
+            <div class="header">
+                <h1>Личный кабинет</h1>
+            </div>
+
+            <div class="profile-card">
+                <div class="avatar" id="userAvatar">👤</div>
+                <h2 id="userName">Загрузка...</h2>
+                <p class="user-info" id="userInfo">@username</p>
+            </div>
+
+            <div class="menu-list">
+                <div class="menu-item" onclick="showSettings()">
+                    <span class="icon">⚙️</span>
+                    <span>Настройки</span>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="menu-item" onclick="showProfile()">
+                    <span class="icon">👤</span>
+                    <span>Профиль</span>
+                    <span class="arrow">›</span>
+                </div>
+                <div class="menu-item" onclick="showAbout()">
+                    <span class="icon">ℹ️</span>
+                    <span>О приложении</span>
+                    <span class="arrow">›</span>
+                </div>
+            </div>
         </div>
 
-        <div id="error" class="error" style="display: none;"></div>
+        <!-- Страница профиля -->
+        <div id="profilePage" class="page">
+            <div class="header">
+                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <h1>Профиль</h1>
+            </div>
 
-        <div id="profile" style="display: none;">
-            <div class="profile-card">
-                <div class="profile-header">
-                    <div class="avatar" id="avatar"></div>
-                    <div class="profile-info">
-                        <h2 id="fullName"></h2>
-                        <div class="username" id="username"></div>
+            <div class="content">
+                <div class="info-block">
+                    <div class="info-row">
+                        <span class="label">Имя:</span>
+                        <span id="profileName">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Username:</span>
+                        <span id="profileUsername">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">ID:</span>
+                        <span id="profileId">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Язык:</span>
+                        <span id="profileLang">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница настроек -->
+        <div id="settingsPage" class="page">
+            <div class="header">
+                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <h1>Настройки</h1>
+            </div>
+
+            <div class="content">
+                <div class="settings-group">
+                    <h3>Уведомления</h3>
+                    <div class="setting-item">
+                        <span>Включить уведомления</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="notifications" checked>
+                            <span class="slider"></span>
+                        </label>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-label">User ID</div>
-                    <div id="userId"></div>
+                <div class="settings-group">
+                    <h3>Внешний вид</h3>
+                    <div class="setting-item">
+                        <span>Тёмная тема</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="darkTheme">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-label">Язык</div>
-                    <div id="language"></div>
+                <div class="settings-group">
+                    <h3>Другое</h3>
+                    <div class="setting-item">
+                        <span>Звуки</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="sounds" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="info-item" id="premiumBlock" style="display: none;">
-                    <div class="info-label">Статус</div>
-                    <div>Telegram Premium <span class="badge">⭐</span></div>
+                <button class="save-btn" onclick="saveSettings()">Сохранить настройки</button>
+            </div>
+        </div>
+
+        <!-- Страница "О приложении" -->
+        <div id="aboutPage" class="page">
+            <div class="header">
+                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <h1>О приложении</h1>
+            </div>
+
+            <div class="content">
+                <div class="about-content">
+                    <h2>Telegram Web App</h2>
+                    <p>Версия: 1.0.0</p>
+                    <p class="description">
+                        Простое приложение с личным кабинетом и настройками,
+                        созданное для демонстрации возможностей Telegram Web Apps.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-
-        // Расширяем WebApp на весь экран
-        tg.expand();
-
-        // Устанавливаем цвет заголовка
-        tg.setHeaderColor('secondary_bg_color');
-
-        async function authenticateUser() {
-            try {
-                const initData = tg.initData;
-
-                if (!initData) {
-                    throw new Error('Приложение должно быть запущено из Telegram');
-                }
-
-                const response = await fetch('/api/auth', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ initData })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка аутентификации');
-                }
-
-                const data = await response.json();
-                displayProfile(data.user);
-
-            } catch (error) {
-                showError(error.message);
-            }
-        }
-
-        function displayProfile(user) {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('profile').style.display = 'block';
-
-            // Аватар
-            const avatarEl = document.getElementById('avatar');
-            if (user.photo_url) {
-                avatarEl.innerHTML = `<img src="${user.photo_url}" alt="Avatar">`;
-            } else {
-                const initial = user.first_name ? user.first_name[0].toUpperCase() : '?';
-                avatarEl.textContent = initial;
-            }
-
-            // Имя
-            const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ');
-            document.getElementById('fullName').textContent = fullName || 'Пользователь';
-
-            // Username
-            const usernameEl = document.getElementById('username');
-            usernameEl.textContent = user.username ? `@${user.username}` : 'Без username';
-
-            // ID
-            document.getElementById('userId').textContent = user.id;
-
-            // Язык
-            document.getElementById('language').textContent = user.language_code?.toUpperCase() || 'Не указан';
-
-            // Premium статус
-            if (user.is_premium) {
-                document.getElementById('premiumBlock').style.display = 'block';
-            }
-
-            // Сообщаем Telegram что приложение готово
-            tg.ready();
-        }
-
-        function showError(message) {
-            document.getElementById('loading').style.display = 'none';
-            const errorEl = document.getElementById('error');
-            errorEl.textContent = message;
-            errorEl.style.display = 'block';
-        }
-
-        // Запускаем аутентификацию при загрузке
-        authenticateUser();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
