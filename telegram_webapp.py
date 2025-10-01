@@ -3,11 +3,38 @@ import hmac
 import hashlib
 import json
 from urllib.parse import parse_qsl
+import asyncio
+import threading
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+import logging
+import sys
+
+# Настройка кодировки для Windows
+if sys.platform == 'win32':
+    sys.stdout.reconfigure(encoding='utf-8')
+
+# Настройка логирования
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 app = Flask(__name__)
 
 # Замените на токен вашего бота
 BOT_TOKEN = "6933094335:AAGT_DNq1EUSzb9PlWwjFeulF4NIT_tGbrk"
+
+# URL вашего WebApp (для локального тестирования используйте ngrok)
+# Например: "https://abc123.ngrok.io" или "http://localhost:5000" для разработки
+WEB_APP_URL = "http://localhost:5000"
+
+# Инициализация бота
+bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+dp = Dispatcher()
 
 def validate_telegram_data(init_data: str) -> dict:
     """Проверяет и валидирует данные от Telegram WebApp"""
@@ -82,5 +109,96 @@ def authenticate():
         }
     })
 
+
+# ========== Обработчики Telegram бота ==========
+
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    """Обработчик команды /start"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="🚀 Открыть приложение",
+                    web_app=WebAppInfo(url=WEB_APP_URL)
+                )
+            ]
+        ]
+    )
+
+    await message.answer(
+        f"👋 Привет, <b>{message.from_user.first_name}</b>!\n\n"
+        f"Нажми на кнопку ниже, чтобы открыть WebApp профиль:",
+        reply_markup=keyboard
+    )
+
+
+@dp.message(Command("help"))
+async def cmd_help(message: types.Message):
+    """Обработчик команды /help"""
+    await message.answer(
+        "📖 <b>Доступные команды:</b>\n\n"
+        "/start - Открыть WebApp\n"
+        "/help - Показать это сообщение\n"
+        "/app - Открыть приложение"
+    )
+
+
+@dp.message(Command("app"))
+async def cmd_app(message: types.Message):
+    """Обработчик команды /app"""
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="🚀 Открыть приложение",
+                    web_app=WebAppInfo(url=WEB_APP_URL)
+                )
+            ]
+        ]
+    )
+
+    await message.answer(
+        "Нажми на кнопку для запуска приложения:",
+        reply_markup=keyboard
+    )
+
+
+@dp.message()
+async def echo_message(message: types.Message):
+    """Обработчик всех остальных сообщений"""
+    await message.answer(
+        f"Используй команду /start для запуска приложения"
+    )
+
+
+# ========== Запуск бота и сервера ==========
+
+async def start_bot():
+    """Запускает Telegram бота"""
+    print("🤖 Telegram бот запущен...")
+    await dp.start_polling(bot)
+
+
+def run_flask():
+    """Запускает Flask сервер"""
+    print("🌐 Flask сервер запущен на http://localhost:5000")
+    app.run(debug=False, host='0.0.0.0', port=5000, use_reloader=False)
+
+
+def main():
+    """Главная функция - запускает Flask и бота одновременно"""
+    print("=" * 50)
+    print("🚀 Запуск Telegram WebApp")
+    print("=" * 50)
+
+    # Запускаем Flask в отдельном потоке
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    flask_thread.start()
+
+    # Запускаем бота в основном потоке
+    asyncio.run(start_bot())
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    main()
