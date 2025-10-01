@@ -11,31 +11,103 @@
     <div class="container">
         <!-- Главная страница -->
         <div id="mainPage" class="page active">
-            <div class="header">
-                <h1>Личный кабинет</h1>
+            <div class="header-main">
+                <div class="profile-header">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" id="userAvatar">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 4C12.6863 4 10 6.68629 10 10C10 13.3137 12.6863 16 16 16C19.3137 16 22 13.3137 22 10C22 6.68629 19.3137 4 16 4Z" fill="currentColor"/>
+                                <path d="M16 18C10.4772 18 6 22.4772 6 28H26C26 22.4772 21.5228 18 16 18Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="userName">Загрузка...</h1>
+                        <p class="user-status" id="userInfo">@username</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="profile-card">
-                <div class="avatar" id="userAvatar">👤</div>
-                <h2 id="userName">Загрузка...</h2>
-                <p class="user-info" id="userInfo">@username</p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 2L12.5 7L18 8L14 12L15 18L10 15.5L5 18L6 12L2 8L7.5 7L10 2Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Баллы</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Активность</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="menu-list">
-                <div class="menu-item" onclick="showSettings()">
-                    <span class="icon">⚙️</span>
-                    <span>Настройки</span>
-                    <span class="arrow">›</span>
-                </div>
-                <div class="menu-item" onclick="showProfile()">
-                    <span class="icon">👤</span>
-                    <span>Профиль</span>
-                    <span class="arrow">›</span>
-                </div>
-                <div class="menu-item" onclick="showAbout()">
-                    <span class="icon">ℹ️</span>
-                    <span>О приложении</span>
-                    <span class="arrow">›</span>
+            <div class="menu-section">
+                <div class="section-title">Меню</div>
+                <div class="menu-list">
+                    <div class="menu-item" onclick="showProfile()">
+                        <div class="menu-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4Z" fill="currentColor"/>
+                                <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="menu-content">
+                            <span class="menu-text">Профиль</span>
+                            <span class="menu-description">Личная информация</span>
+                        </div>
+                        <div class="menu-arrow">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="menu-item" onclick="showSettings()">
+                        <div class="menu-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" fill="currentColor"/>
+                                <path d="M13.5 2L12.7 4.3C12 4.5 11.3 4.8 10.7 5.2L8.5 4.3L7 6.7L8.8 8.3C8.7 9 8.7 9.7 8.8 10.4L7 12L8.5 14.4L10.7 13.5C11.3 13.9 12 14.2 12.7 14.4L13.5 16.7H16.5L17.3 14.4C18 14.2 18.7 13.9 19.3 13.5L21.5 14.4L23 12L21.2 10.4C21.3 9.7 21.3 9 21.2 8.3L23 6.7L21.5 4.3L19.3 5.2C18.7 4.8 18 4.5 17.3 4.3L16.5 2H13.5Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="menu-content">
+                            <span class="menu-text">Настройки</span>
+                            <span class="menu-description">Параметры приложения</span>
+                        </div>
+                        <div class="menu-arrow">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="menu-item" onclick="showAbout()">
+                        <div class="menu-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="menu-content">
+                            <span class="menu-text">О приложении</span>
+                            <span class="menu-description">Версия и информация</span>
+                        </div>
+                        <div class="menu-arrow">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,27 +115,72 @@
         <!-- Страница профиля -->
         <div id="profilePage" class="page">
             <div class="header">
-                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <button class="back-btn" onclick="showMain()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
                 <h1>Профиль</h1>
             </div>
 
             <div class="content">
+                <div class="profile-avatar-large">
+                    <div class="avatar-large">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32 8C25.3726 8 20 13.3726 20 20C20 26.6274 25.3726 32 32 32C38.6274 32 44 26.6274 44 20C44 13.3726 38.6274 8 32 8Z" fill="currentColor"/>
+                            <path d="M32 36C20.9543 36 12 44.9543 12 56H52C52 44.9543 43.0457 36 32 36Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+
                 <div class="info-block">
+                    <div class="info-section-title">Личные данные</div>
                     <div class="info-row">
-                        <span class="label">Имя:</span>
-                        <span id="profileName">-</span>
+                        <div class="info-row-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2Z" fill="currentColor"/>
+                                <path d="M10 12C5.58172 12 2 15.5817 2 20H18C18 15.5817 14.4183 12 10 12Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="info-row-content">
+                            <span class="label">Имя</span>
+                            <span class="value" id="profileName">-</span>
+                        </div>
                     </div>
                     <div class="info-row">
-                        <span class="label">Username:</span>
-                        <span id="profileUsername">-</span>
+                        <div class="info-row-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2L2 10L8 12L10 18L18 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="info-row-content">
+                            <span class="label">Username</span>
+                            <span class="value" id="profileUsername">-</span>
+                        </div>
                     </div>
                     <div class="info-row">
-                        <span class="label">ID:</span>
-                        <span id="profileId">-</span>
+                        <div class="info-row-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="16" height="16" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M6 6H14M6 10H14M6 14H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="info-row-content">
+                            <span class="label">ID</span>
+                            <span class="value" id="profileId">-</span>
+                        </div>
                     </div>
                     <div class="info-row">
-                        <span class="label">Язык:</span>
-                        <span id="profileLang">-</span>
+                        <div class="info-row-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M2 10H18M10 2C12 4 13 7 13 10C13 13 12 16 10 18M10 2C8 4 7 7 7 10C7 13 8 16 10 18" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="info-row-content">
+                            <span class="label">Язык</span>
+                            <span class="value" id="profileLang">-</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,15 +189,28 @@
         <!-- Страница настроек -->
         <div id="settingsPage" class="page">
             <div class="header">
-                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <button class="back-btn" onclick="showMain()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
                 <h1>Настройки</h1>
             </div>
 
             <div class="content">
                 <div class="settings-group">
-                    <h3>Уведомления</h3>
+                    <div class="settings-group-title">Уведомления</div>
                     <div class="setting-item">
-                        <span>Включить уведомления</span>
+                        <div class="setting-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2C7.243 2 5 4.243 5 7V11L3 13V14H17V13L15 11V7C15 4.243 12.757 2 10 2Z" fill="currentColor"/>
+                                <path d="M8.5 16C8.5 17.105 9.395 18 10.5 18C11.605 18 12.5 17.105 12.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="setting-content">
+                            <span class="setting-text">Включить уведомления</span>
+                            <span class="setting-description">Получать важные обновления</span>
+                        </div>
                         <label class="toggle">
                             <input type="checkbox" id="notifications" checked>
                             <span class="slider"></span>
@@ -89,9 +219,17 @@
                 </div>
 
                 <div class="settings-group">
-                    <h3>Внешний вид</h3>
+                    <div class="settings-group-title">Внешний вид</div>
                     <div class="setting-item">
-                        <span>Тёмная тема</span>
+                        <div class="setting-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17C13.866 17 17 13.866 17 10C17 6.13401 13.866 3 10 3ZM10 15V5C12.7614 5 15 7.23858 15 10C15 12.7614 12.7614 15 10 15Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="setting-content">
+                            <span class="setting-text">Тёмная тема</span>
+                            <span class="setting-description">Использовать тёмное оформление</span>
+                        </div>
                         <label class="toggle">
                             <input type="checkbox" id="darkTheme">
                             <span class="slider"></span>
@@ -100,9 +238,18 @@
                 </div>
 
                 <div class="settings-group">
-                    <h3>Другое</h3>
+                    <div class="settings-group-title">Звук</div>
                     <div class="setting-item">
-                        <span>Звуки</span>
+                        <div class="setting-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7V13H6L11 17V3L6 7H3Z" fill="currentColor"/>
+                                <path d="M13 6C14.5 7.5 14.5 12.5 13 14M15.5 4C17.5 6 17.5 14 15.5 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="setting-content">
+                            <span class="setting-text">Звуки</span>
+                            <span class="setting-description">Звуковые эффекты</span>
+                        </div>
                         <label class="toggle">
                             <input type="checkbox" id="sounds" checked>
                             <span class="slider"></span>
@@ -110,25 +257,72 @@
                     </div>
                 </div>
 
-                <button class="save-btn" onclick="saveSettings()">Сохранить настройки</button>
+                <button class="primary-btn" onclick="saveSettings()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 5L7.5 13.5L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Сохранить настройки
+                </button>
             </div>
         </div>
 
         <!-- Страница "О приложении" -->
         <div id="aboutPage" class="page">
             <div class="header">
-                <button class="back-btn" onclick="showMain()">‹ Назад</button>
+                <button class="back-btn" onclick="showMain()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
                 <h1>О приложении</h1>
             </div>
 
             <div class="content">
+                <div class="about-logo">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="80" height="80" rx="20" fill="url(#gradient)"/>
+                        <path d="M20 40L32 52L60 28" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2AABEE"/>
+                                <stop offset="1" stop-color="#229ED9"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
                 <div class="about-content">
                     <h2>Telegram Web App</h2>
-                    <p>Версия: 1.0.0</p>
+                    <div class="version-badge">Версия 1.0.0</div>
                     <p class="description">
-                        Простое приложение с личным кабинетом и настройками,
+                        Современное приложение с интуитивным интерфейсом,
                         созданное для демонстрации возможностей Telegram Web Apps.
                     </p>
+                </div>
+
+                <div class="info-block">
+                    <div class="info-section-title">Возможности</div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-text">
+                            <div class="feature-title">Современный дизайн</div>
+                            <div class="feature-desc">Адаптивный интерфейс</div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-text">
+                            <div class="feature-title">Высокая производительность</div>
+                            <div class="feature-desc">Быстрая работа</div>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">
+                            <div class="feature-title">Безопасность</div>
+                            <div class="feature-desc">Защита данных</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -60,14 +60,38 @@ function init() {
 
     // Загружаем настройки
     loadSettings();
+
+    // Добавляем эффект появления элементов
+    animateOnScroll();
 }
 
-// Навигация между страницами
+// Навигация между страницами с плавными переходами
 function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    document.getElementById(pageId).classList.add('active');
+    const currentPage = document.querySelector('.page.active');
+    const nextPage = document.getElementById(pageId);
+
+    if (currentPage === nextPage) return;
+
+    // Анимация исчезновения текущей страницы
+    if (currentPage) {
+        currentPage.style.animation = 'slideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+
+        setTimeout(() => {
+            currentPage.classList.remove('active');
+            currentPage.style.animation = '';
+
+            // Анимация появления новой страницы
+            nextPage.classList.add('active');
+
+            // Плавная прокрутка наверх
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }, 300);
+    } else {
+        nextPage.classList.add('active');
+    }
 
     // Управление кнопкой "Назад" в Telegram
     if (pageId === 'mainPage') {
@@ -75,7 +99,28 @@ function showPage(pageId) {
     } else {
         tg.BackButton.show();
     }
+
+    // Добавляем вибрацию при переходе (если поддерживается)
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
 }
+
+// Добавляем анимацию выхода
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 function showMain() {
     showPage('mainPage');
@@ -93,23 +138,53 @@ function showAbout() {
     showPage('aboutPage');
 }
 
-// Сохранение настроек
+// Сохранение настроек с анимацией
 function saveSettings() {
-    userSettings.notifications = document.getElementById('notifications').checked;
-    userSettings.darkTheme = document.getElementById('darkTheme').checked;
-    userSettings.sounds = document.getElementById('sounds').checked;
+    const button = document.querySelector('.primary-btn');
+    const originalText = button.innerHTML;
 
-    localStorage.setItem('userSettings', JSON.stringify(userSettings));
+    // Анимация загрузки
+    button.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation: spin 1s linear infinite;"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/><path d="M10 2C5.58172 2 2 5.58172 2 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Сохранение...';
+    button.style.pointerEvents = 'none';
 
-    // Показываем уведомление
-    tg.showAlert('Настройки успешно сохранены!');
+    setTimeout(() => {
+        userSettings.notifications = document.getElementById('notifications').checked;
+        userSettings.darkTheme = document.getElementById('darkTheme').checked;
+        userSettings.sounds = document.getElementById('sounds').checked;
 
-    // Опционально: применяем тёмную тему
-    applyTheme();
+        localStorage.setItem('userSettings', JSON.stringify(userSettings));
+
+        // Применяем тему
+        applyTheme();
+
+        // Возвращаем кнопку в исходное состояние
+        button.innerHTML = originalText;
+        button.style.pointerEvents = 'auto';
+
+        // Показываем уведомление
+        tg.showAlert('Настройки успешно сохранены!');
+
+        // Вибрация успеха
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.notificationOccurred('success');
+        }
+    }, 800);
 }
 
-// Применение темы
+// Добавляем анимацию вращения для загрузки
+const spinStyle = document.createElement('style');
+spinStyle.textContent = `
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(spinStyle);
+
+// Применение темы с плавным переходом
 function applyTheme() {
+    document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+
     if (userSettings.darkTheme) {
         document.body.style.setProperty('--tg-theme-bg-color', '#1a1a1a');
         document.body.style.setProperty('--tg-theme-text-color', '#ffffff');
@@ -123,11 +198,95 @@ function applyTheme() {
     }
 }
 
-// Запуск приложения
+// Анимация элементов при прокрутке
+function animateOnScroll() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Наблюдаем за элементами
+    const elementsToAnimate = document.querySelectorAll('.menu-item, .stat-card, .info-row, .setting-item, .feature-item');
+    elementsToAnimate.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.animationDelay = `${index * 0.1}s`;
+        observer.observe(el);
+    });
+}
+
+// Добавляем анимацию появления снизу
+const fadeInUpStyle = document.createElement('style');
+fadeInUpStyle.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(fadeInUpStyle);
+
+// Добавляем тактильные отклики для всех интерактивных элементов
 document.addEventListener('DOMContentLoaded', () => {
+    // Инициализация
     init();
     applyTheme();
+
+    // Добавляем вибрацию для кликов по элементам меню
+    const interactiveElements = document.querySelectorAll('.menu-item, .stat-card, .back-btn, .primary-btn');
+    interactiveElements.forEach(element => {
+        element.addEventListener('click', () => {
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        });
+    });
+
+    // Добавляем вибрацию для переключателей
+    const toggles = document.querySelectorAll('.toggle input');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', () => {
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
+            }
+        });
+    });
+
+    // Эффект параллакса для аватара (опционально)
+    const avatar = document.querySelector('.avatar');
+    if (avatar) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            avatar.style.transform = `scale(${1 + scrolled * 0.0005}) translateY(${scrolled * 0.1}px)`;
+        });
+    }
 });
 
 // Устанавливаем цвета темы из Telegram
 tg.ready();
+
+// Предотвращение стандартного поведения pull-to-refresh (опционально)
+let touchStartY = 0;
+document.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+}, { passive: false });
+
+document.addEventListener('touchmove', (e) => {
+    const touchY = e.touches[0].clientY;
+    const touchDiff = touchY - touchStartY;
+
+    if (touchDiff > 0 && window.scrollY === 0) {
+        e.preventDefault();
+    }
+}, { passive: false });
