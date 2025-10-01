@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Личный кабинет</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -108,6 +108,89 @@
                             </svg>
                         </div>
                     </div>
+                    <div class="menu-item special-item" onclick="showPromoModal()">
+                        <div class="menu-icon special-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="menu-content">
+                            <span class="menu-text">Специальное предложение</span>
+                            <span class="menu-description special-desc">Получите бонус прямо сейчас!</span>
+                        </div>
+                        <div class="menu-badge">NEW</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно в стиле Burger King -->
+        <div id="promoModal" class="bk-modal">
+            <div class="bk-modal-overlay" onclick="closePromoModal()"></div>
+            <div class="bk-modal-content">
+                <button class="bk-modal-close" onclick="closePromoModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="bk-modal-header">
+                    <div class="bk-modal-icon">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="30" fill="#FF6B00"/>
+                            <path d="M32 16L37.09 26.26L48 27.77L40 35.52L41.82 46.36L32 41.01L22.18 46.36L24 35.52L16 27.77L26.91 26.26L32 16Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <h2 class="bk-modal-title">Специальное предложение!</h2>
+                    <p class="bk-modal-subtitle">Эксклюзивно для вас</p>
+                </div>
+
+                <div class="bk-modal-body">
+                    <div class="bk-promo-card">
+                        <div class="bk-promo-image">
+                            <div class="bk-promo-placeholder">
+                                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="120" height="120" rx="16" fill="#FFE5CC"/>
+                                    <path d="M60 30C52 30 45 35 45 45C45 50 48 55 52 58L50 75H70L68 58C72 55 75 50 75 45C75 35 68 30 60 30Z" fill="#FF6B00"/>
+                                    <rect x="48" y="75" width="24" height="8" rx="4" fill="#D4A574"/>
+                                    <ellipse cx="60" cy="87" rx="15" ry="3" fill="#8B6F47"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="bk-promo-details">
+                            <h3 class="bk-promo-title">Скидка 30%</h3>
+                            <p class="bk-promo-description">На все заказы сегодня при использовании промокода</p>
+                            <div class="bk-promo-code">
+                                <span class="bk-promo-code-label">Промокод:</span>
+                                <div class="bk-promo-code-value">
+                                    <span id="promoCodeText">WELCOME30</span>
+                                    <button class="bk-copy-btn" onclick="copyPromoCode()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M3 11V3C3 2.44772 3.44772 2 4 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bk-timer">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <path d="M8 4V8L11 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <span>Предложение действует: <strong id="timerText">23:59:45</strong></span>
+                    </div>
+                </div>
+
+                <div class="bk-modal-footer">
+                    <button class="bk-btn-primary" onclick="activatePromo()">
+                        Активировать предложение
+                    </button>
+                    <button class="bk-btn-secondary" onclick="closePromoModal()">
+                        Может быть позже
+                    </button>
                 </div>
             </div>
         </div>

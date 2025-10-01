@@ -770,3 +770,383 @@ input:active + .slider:before {
     background-size: 2000px 100%;
     animation: shimmer 2s infinite linear;
 }
+
+/* Special menu item */
+.menu-item.special-item {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item.special-item::before {
+    opacity: 0.1;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+}
+
+.menu-item.special-item:hover::before {
+    opacity: 0.2;
+}
+
+.menu-item.special-item .menu-icon.special-icon {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.menu-item.special-item .menu-text,
+.menu-item.special-item .menu-description {
+    color: white;
+}
+
+.menu-item.special-item .menu-description.special-desc {
+    opacity: 0.9;
+}
+
+.menu-badge {
+    background: #FFD700;
+    color: #FF6B00;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+    animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Burger King Modal Styles */
+.bk-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-l);
+}
+
+.bk-modal.active {
+    display: flex;
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.bk-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: overlayFadeIn 0.3s ease;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.bk-modal-content {
+    position: relative;
+    background: var(--tg-theme-bg-color, #ffffff);
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(100px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.bk-modal-close {
+    position: absolute;
+    top: var(--spacing-l);
+    right: var(--spacing-l);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--tg-theme-text-color, #000000);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.bk-modal-close:hover {
+    background: rgba(0, 0, 0, 0.15);
+    transform: rotate(90deg);
+}
+
+.bk-modal-close:active {
+    transform: rotate(90deg) scale(0.9);
+}
+
+.bk-modal-header {
+    text-align: center;
+    padding: var(--spacing-xxl) var(--spacing-xl) var(--spacing-l);
+}
+
+.bk-modal-icon {
+    margin-bottom: var(--spacing-l);
+    animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bk-modal-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-s);
+    color: var(--tg-theme-text-color, #000000);
+    letter-spacing: -0.5px;
+}
+
+.bk-modal-subtitle {
+    font-size: 15px;
+    color: var(--tg-theme-hint-color, #999999);
+    font-weight: 500;
+}
+
+.bk-modal-body {
+    padding: 0 var(--spacing-xl) var(--spacing-l);
+}
+
+.bk-promo-card {
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    border-radius: var(--radius-l);
+    padding: var(--spacing-l);
+    margin-bottom: var(--spacing-l);
+    border: 2px solid #FF6B00;
+}
+
+.bk-promo-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-l);
+}
+
+.bk-promo-placeholder {
+    animation: float 3s ease-in-out infinite;
+}
+
+.bk-promo-details {
+    text-align: center;
+}
+
+.bk-promo-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FF6B00;
+    margin-bottom: var(--spacing-s);
+}
+
+.bk-promo-description {
+    font-size: 14px;
+    color: var(--tg-theme-hint-color, #999999);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-l);
+}
+
+.bk-promo-code {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-s);
+    align-items: center;
+}
+
+.bk-promo-code-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--tg-theme-hint-color, #999999);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bk-promo-code-value {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+    padding: var(--spacing-m) var(--spacing-l);
+    border-radius: var(--radius-m);
+    box-shadow: 0 4px 16px rgba(255, 107, 0, 0.3);
+}
+
+.bk-promo-code-value span {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+}
+
+.bk-copy-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-s);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.bk-copy-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.bk-copy-btn:active {
+    transform: scale(0.95);
+}
+
+.bk-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-s);
+    padding: var(--spacing-m);
+    background: rgba(255, 107, 0, 0.1);
+    border-radius: var(--radius-m);
+    color: #FF6B00;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.bk-timer strong {
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+}
+
+.bk-modal-footer {
+    padding: var(--spacing-l) var(--spacing-xl) var(--spacing-xxl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.bk-btn-primary {
+    width: 100%;
+    padding: var(--spacing-l);
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-m);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 16px rgba(255, 107, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.bk-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.bk-btn-primary:hover::before {
+    left: 100%;
+}
+
+.bk-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+}
+
+.bk-btn-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.bk-btn-secondary {
+    width: 100%;
+    padding: var(--spacing-m);
+    background: transparent;
+    color: var(--tg-theme-hint-color, #999999);
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bk-btn-secondary:hover {
+    color: var(--tg-theme-text-color, #000000);
+}
+
+.bk-btn-secondary:active {
+    transform: scale(0.95);
+}
+
+/* Safe area padding */
+@supports(padding: max(0px)) {
+    .container {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+
+    .bk-modal-content {
+        padding-bottom: max(var(--spacing-xxl), env(safe-area-inset-bottom));
+    }
+}
