@@ -3,7 +3,7 @@ from telegram import Update, WebAppInfo
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 # Замените на токен вашего бота
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = "6933094335:AAGT_DNq1EUSzb9PlWwjFeulF4NIT_tGbrk"
 
 # URL вашего WebApp (замените на ваш URL после деплоя)
 WEBAPP_URL = "https://your-domain.com"  # или ngrok URL для тестирования

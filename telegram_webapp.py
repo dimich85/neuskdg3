@@ -7,7 +7,7 @@ from urllib.parse import parse_qsl
 app = Flask(__name__)
 
 # Замените на токен вашего бота
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = "6933094335:AAGT_DNq1EUSzb9PlWwjFeulF4NIT_tGbrk"
 
 def validate_telegram_data(init_data: str) -> dict:
     """Проверяет и валидирует данные от Telegram WebApp"""
