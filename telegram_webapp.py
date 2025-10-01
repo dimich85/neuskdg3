@@ -30,7 +30,6 @@ BOT_TOKEN = "6933094335:AAGT_DNq1EUSzb9PlWwjFeulF4NIT_tGbrk"
 
 # URL вашего WebApp (для локального тестирования используйте ngrok)
 # Например: "https://abc123.ngrok.io" или "http://localhost:5000" для разработки
-WEB_APP_URL = "http://localhost:5000"
 
 # Инициализация бота
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
