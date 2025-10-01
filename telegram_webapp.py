@@ -118,8 +118,7 @@ async def cmd_start(message: types.Message):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🚀 Открыть приложение",
-                    web_app=WebAppInfo(url=WEB_APP_URL)
+                    text="🚀 Открыть приложение"
                 )
             ]
         ]
@@ -151,7 +150,6 @@ async def cmd_app(message: types.Message):
             [
                 InlineKeyboardButton(
                     text="🚀 Открыть приложение",
-                    web_app=WebAppInfo(url=WEB_APP_URL)
                 )
             ]
         ]
